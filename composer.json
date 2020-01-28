@@ -1,0 +1,39 @@
+{
+  "name": "projet-normandie/page-bundle",
+  "description": "Normandie PageBundle",
+  "type": "symfony-bundle",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Benard David",
+      "email": "magicbart@gmail.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Verlhac Gaëtan",
+      "email": "viviengaetan69@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "doctrine/orm": "^2.5",
+    "doctrine/doctrine-bundle": "~1.6",
+    "knplabs/doctrine-behaviors": "~1.4",
+    "symfony/validator": "~3.0",
+    "symfony/framework-bundle": "~3.0"
+  },
+  "suggest": {
+    "sonata-project/admin-bundle": "In order to use Admin interface",
+    "sonata-project/doctrine-orm-admin-bundle": "In order to use Admin interface"
+  },
+  "autoload": {
+    "psr-4": { "ProjetNormandie\\PageBundle\\": "" }
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  }
+}
