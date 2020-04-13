@@ -3,10 +3,12 @@
 namespace ProjetNormandie\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use Knp\DoctrineBehaviors\Model\Sluggable\Sluggable;
-
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 
 /**
  * Page
@@ -15,11 +17,11 @@ use Knp\DoctrineBehaviors\Model\Sluggable\Sluggable;
  * @ORM\Entity(repositoryClass="ProjetNormandie\PageBundle\Repository\PageRepository")
  * @method PageTranslation translate(string $locale, bool $fallbackToDefault)
  */
-class Page
+class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface
 {
-    use Timestampable;
-    use Translatable;
-    use Sluggable;
+    use TimestampableTrait;
+    use TranslatableTrait;
+    use SluggableTrait;
 
     /**
      * @var integer
@@ -123,9 +125,9 @@ class Page
     /**
      * Returns an array of the fields used to generate the slug.
      *
-     * @return array
+     * @return string[]
      */
-    public function getSluggableFields()
+    public function getSluggableFields(): array
     {
         return ['name'];
     }
