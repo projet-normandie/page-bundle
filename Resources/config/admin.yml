@@ -2,7 +2,7 @@ services:
     sonata.admin.page.page:
         class: ProjetNormandie\PageBundle\Admin\PageAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Pages", label: "Page" }
+            - { name: sonata.admin, manager_type: orm, group: "group.pages", label: "label.page" }
         arguments:
             - ~
             - ProjetNormandie\PageBundle\Entity\Page
