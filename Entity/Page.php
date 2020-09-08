@@ -63,7 +63,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param integer $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -86,7 +86,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param string $name
      * @return string
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -107,7 +107,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text)
     {
         $this->translate(null, false)->setText($text);
 
