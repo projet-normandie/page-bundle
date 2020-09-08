@@ -13,13 +13,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritdoc}
-     * @throws \RuntimeException When the node type is not supported.
+     * @return TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('projet_normandie_page');
+        $treeBuilder = new TreeBuilder('projet_normandie_page');
+        $treeBuilder->getRootNode();
         return $treeBuilder;
     }
 }

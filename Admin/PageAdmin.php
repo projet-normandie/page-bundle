@@ -7,7 +7,6 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,7 +19,7 @@ class PageAdmin extends AbstractAdmin
     protected $baseRouteName = 'pnforumbundle_admin_page';
 
     /**
-     * @inheritdoc
+     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -28,7 +27,7 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
-     * @inheritdoc
+     * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -40,23 +39,14 @@ class PageAdmin extends AbstractAdmin
                 'fields' => [
                     'text' => [
                         'field_type' => CKEditorType::class,
-                        'label' => TextType::class,
+                        'label' => 'Text',
                     ]
                 ]
             ]);
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
-    {
-
-    }
-
-    /**
-     * @inheritdoc
-     * @throws \RuntimeException When defining wrong or duplicate field names.
+     * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
     {
@@ -74,8 +64,7 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
-     * @inheritdoc
-     * @throws \RuntimeException When defining wrong or duplicate field names.
+     * @param ShowMapper $showMapper
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
