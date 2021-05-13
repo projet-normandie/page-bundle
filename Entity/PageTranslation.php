@@ -24,6 +24,13 @@ class PageTranslation implements TranslationInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="text", type="text", nullable=false)
      */
     private $text;
@@ -37,10 +44,29 @@ class PageTranslation implements TranslationInterface
     }
 
     /**
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle(string $title): PageTranslation
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
      * @param string $text
      * @return $this
      */
-    public function setText(string $text)
+    public function setText(string $text): PageTranslation
     {
         $this->text = $text;
 
@@ -50,7 +76,7 @@ class PageTranslation implements TranslationInterface
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
