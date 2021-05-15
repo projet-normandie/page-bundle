@@ -104,6 +104,25 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     }
 
     /**
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle(string $title)
+    {
+        $this->translate(null, false)->setText($title);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->translate(null, false)->getTitle();
+    }
+
+     /**
      * @param string $text
      * @return $this
      */
