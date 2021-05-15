@@ -57,7 +57,7 @@ class PageTranslation implements TranslationInterface
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -76,7 +76,7 @@ class PageTranslation implements TranslationInterface
     /**
      * @return string
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
