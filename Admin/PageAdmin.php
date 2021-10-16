@@ -73,6 +73,6 @@ class PageAdmin extends AbstractAdmin
             ->add('name')
             ->add('createdAt', null, ['label' => 'Created At'])
             ->add('updatedAt', null, ['label' => 'Updated At'])
-            ->add('getDefaultText', null, ['label' => 'Text', 'safe' => true]);
+            ->add('getText', null, ['label' => 'Text', 'safe' => true]);
     }
 }
