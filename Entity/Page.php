@@ -23,22 +23,26 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     use TranslatableTrait;
     use SluggableTrait;
 
+    const STATUS_PUBLIC = 'PUBLIC';
+    const STATUS_PRIVATE = 'PRIVATE';
+
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private ?int $id = null;
 
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", nullable=false)
      */
-    private $name;
+    private string $name = '';
+
+     /**
+     * @ORM\Column(name="status", type="string", nullable=false)
+     */
+    private string $status = 'PUBLIC';
 
 
     /**
@@ -52,44 +56,39 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     /**
      * @return string
      */
-    public function getDefaultText()
+    public function getDefaultText(): string
     {
         return $this->translate('en', false)->getText();
     }
 
     /**
      * Set id
-     *
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id)
+    public function setId(int $id): Self
     {
         $this->id = $id;
-
         return $this;
     }
 
     /**
      * Get id
-     *
      * @return integer
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
      * Set name
-     *
      * @param string $name
      * @return string
      */
-    public function setName(string $name)
+    public function setName(string $name): string
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -104,20 +103,38 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     }
 
     /**
+     * @param string $status
+     * @return $this
+     */
+    public function setStatus(string $status): Self
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get status
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
      * @param string $title
      * @return $this
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): Self
     {
         $this->translate(null, false)->setText($title);
-
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->translate(null, false)->getTitle();
     }
@@ -126,7 +143,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param string $text
      * @return $this
      */
-    public function setText(string $text)
+    public function setText(string $text): Self
     {
         $this->translate(null, false)->setText($text);
 
@@ -136,7 +153,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->translate(null, false)->getText();
     }
@@ -150,4 +167,16 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     {
         return ['name'];
     }
+
+     /**
+     * @return array
+     */
+    public static function getStatusChoices(): array
+    {
+        return [
+            self::STATUS_PUBLIC => self::STATUS_PUBLIC,
+            self::STATUS_PRIVATE=> self::STATUS_PRIVATE,
+        ];
+    }
+
 }

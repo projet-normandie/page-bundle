@@ -15,6 +15,7 @@ ProjetNormandie\PageBundle\Entity\Page:
     title:
       groups:
         - 'page.read'
+        - 'page.list'
     text:
       groups:
         - 'page.read'

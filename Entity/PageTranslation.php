@@ -19,26 +19,26 @@ class PageTranslation implements TranslationInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", nullable=false)
      */
-    private $title;
+    private string $title = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="text", type="text", nullable=false)
      */
-    private $text;
+    private string $text = '';
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -47,7 +47,7 @@ class PageTranslation implements TranslationInterface
      * @param string $title
      * @return $this
      */
-    public function setTitle(string $title): PageTranslation
+    public function setTitle(string $title): Self
     {
         $this->title = $title;
 
@@ -66,7 +66,7 @@ class PageTranslation implements TranslationInterface
      * @param string $text
      * @return $this
      */
-    public function setText(string $text): PageTranslation
+    public function setText(string $text): Self
     {
         $this->text = $text;
 
