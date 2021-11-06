@@ -3,7 +3,6 @@ resources:
         collectionOperations:
             get:
                 normalization_context: {'groups': [page.list]}
-                filters : ['article.filters']
         itemOperations:
             get:
                 normalization_context: {'groups': [page.read]}

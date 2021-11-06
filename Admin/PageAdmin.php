@@ -9,7 +9,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use ProjetNormandie\PageBundle\Entity\Page;
 
 /**
  * Administration manager for the Page Bundle.
@@ -27,13 +29,21 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param FormMapper $formMapper
+     * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $form)
     {
-        $formMapper
+        $form
             ->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
             ->add('name', TextType::class)
+            ->add(
+                'status',
+                ChoiceType::class,
+                [
+                    'label' => 'label.status',
+                    'choices' => Page::getStatusChoices(),
+                ]
+            )
             ->add('translations', TranslationsType::class, [
                 'required' => true,
                 'fields' => [
@@ -46,12 +56,20 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ListMapper $listMapper
+     * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $list)
     {
-        $listMapper->addIdentifier('id')
+        $list->addIdentifier('id')
             ->add('name', null, ['label' => 'Name'])
+            ->add(
+                'status',
+                'choice',
+                [
+                    'label' => 'label.status',
+                    'choices' => Page::getStatusChoices(),
+                ]
+            )
             ->add('slug', null, ['label' => 'Slug'])
             ->add('createdAt', null, ['label' => 'Created At'])
             ->add('updatedAt', null, ['label' => 'Updated At'])
@@ -64,13 +82,14 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ShowMapper $showMapper
+     * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $show)
     {
-        $showMapper
+        $show
             ->add('id')
             ->add('name')
+            ->add('status', null, ['label' => 'label.status'])
             ->add('createdAt', null, ['label' => 'Created At'])
             ->add('updatedAt', null, ['label' => 'Updated At'])
             ->add('getText', null, ['label' => 'Text', 'safe' => true]);
