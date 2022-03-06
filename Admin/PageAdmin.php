@@ -4,6 +4,7 @@ namespace ProjetNormandie\PageBundle\Admin;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -23,7 +24,7 @@ class PageAdmin extends AbstractAdmin
     /**
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('export');
     }
@@ -31,7 +32,7 @@ class PageAdmin extends AbstractAdmin
     /**
      * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $form)
+    protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
@@ -58,7 +59,7 @@ class PageAdmin extends AbstractAdmin
     /**
      * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $list)
+    protected function configureListFields(ListMapper $list): void
     {
         $list->addIdentifier('id')
             ->add('name', null, ['label' => 'Name'])
@@ -84,7 +85,7 @@ class PageAdmin extends AbstractAdmin
     /**
      * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $show)
+    protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('id')
