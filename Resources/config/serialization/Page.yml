@@ -19,6 +19,7 @@ ProjetNormandie\PageBundle\Entity\Page:
     text:
       groups:
         - 'page.read'
+        - 'page.list'
     createdAt:
       groups: []
     updatedAt:
