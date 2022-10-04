@@ -2,6 +2,8 @@
 
 namespace ProjetNormandie\PageBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
@@ -15,7 +17,12 @@ use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
  *
  * @ORM\Table(name="page")
  * @ORM\Entity(repositoryClass="ProjetNormandie\PageBundle\Repository\PageRepository")
- * @method PageTranslation translate(string $locale, bool $fallbackToDefault)
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "slug": "exact",
+*      }
+ * )
  */
 class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface
 {
@@ -66,7 +73,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id): Self
+    public function setId(int $id): Page
     {
         $this->id = $id;
         return $this;
@@ -106,7 +113,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param string $status
      * @return $this
      */
-    public function setStatus(string $status): Self
+    public function setStatus(string $status): Page
     {
         $this->status = $status;
         return $this;
@@ -125,7 +132,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param string $title
      * @return $this
      */
-    public function setTitle(string $title): Self
+    public function setTitle(string $title): Page
     {
         $this->translate(null, false)->setText($title);
         return $this;
@@ -143,7 +150,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      * @param string $text
      * @return $this
      */
-    public function setText(string $text): Self
+    public function setText(string $text): Page
     {
         $this->translate(null, false)->setText($text);
 
@@ -178,5 +185,4 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
             self::STATUS_PRIVATE=> self::STATUS_PRIVATE,
         ];
     }
-
 }
