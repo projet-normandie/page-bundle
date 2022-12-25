@@ -1,2 +1,11 @@
+breadcrumb:
+    link_page_list: 'Liste des pages'
 label:
+    id: 'id'
+    createdAt: 'Créé le'
+    name: 'Nom'
     page: 'Page'
+    slug: 'Slug'
+    status: 'Statut'
+    text: 'Texte'
+    updatedAt: 'Modifié le'
