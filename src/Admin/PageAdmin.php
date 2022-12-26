@@ -35,8 +35,8 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
-            ->add('name', TextType::class)
+            ->add('id', TextType::class, ['label' => 'label.id', 'attr' => ['readonly' => true]])
+            ->add('name', TextType::class, ['label' => 'label.name'])
             ->add(
                 'status',
                 ChoiceType::class,
@@ -61,8 +61,8 @@ class PageAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('id')
-            ->add('name', null, ['label' => 'Name'])
+        $list->addIdentifier('id', null, ['label' => 'label.id'])
+            ->add('name', null, ['label' => 'label.name'])
             ->add(
                 'status',
                 'choice',
@@ -71,9 +71,9 @@ class PageAdmin extends AbstractAdmin
                     'choices' => Page::getStatusChoices(),
                 ]
             )
-            ->add('slug', null, ['label' => 'Slug'])
-            ->add('createdAt', null, ['label' => 'Created At'])
-            ->add('updatedAt', null, ['label' => 'Updated At'])
+            ->add('slug', null, ['label' => 'label.slug'])
+            ->add('createdAt', null, ['label' => 'label.createdAt'])
+            ->add('updatedAt', null, ['label' => 'label.updatedAt'])
             ->add('_action', 'actions', [
                 'actions' => [
                     'show' => [],
@@ -88,11 +88,11 @@ class PageAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('id')
-            ->add('name')
+            ->add('id', null, ['label' => 'label.id'])
+            ->add('name', null, ['label' => 'label.name'])
             ->add('status', null, ['label' => 'label.status'])
-            ->add('createdAt', null, ['label' => 'Created At'])
-            ->add('updatedAt', null, ['label' => 'Updated At'])
-            ->add('getText', null, ['label' => 'Text', 'safe' => true]);
+            ->add('createdAt', null, ['label' => 'label.createdAt'])
+            ->add('updatedAt', null, ['label' => 'label.updatedAt'])
+            ->add('getText', null, ['label' => 'label.text', 'safe' => true]);
     }
 }
