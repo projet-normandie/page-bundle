@@ -2,14 +2,8 @@
 
 namespace ProjetNormandie\PageBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use ProjetNormandie\PageBundle\Entity\Page;
+use Doctrine\ORM\EntityRepository;
 
-class PageRepository extends ServiceEntityRepository
+class PageRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Page::class);
-    }
 }

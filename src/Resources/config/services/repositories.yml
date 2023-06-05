@@ -1,0 +1,6 @@
+services:
+    pn.page.repository.page:
+        class: ProjetNormandie\PageBundle\Repository\PageRepository
+        factory: [ '@doctrine.orm.dwh_entity_manager', 'getRepository' ]
+        arguments:
+            - VideoGamesRecords\PageBundle\Entity\Page
