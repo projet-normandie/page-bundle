@@ -12,6 +12,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use ProjetNormandie\PageBundle\Contracts\PageInterface;
 
 /**
  * Page
@@ -25,15 +26,12 @@ use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 *      }
  * )
  */
-class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface
+class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface, PageInterface
 {
     use TimestampableTrait;
     use TranslatablePropertiesTrait;
     use TranslatableMethodsTrait;
     use SluggableTrait;
-
-    const STATUS_PUBLIC = 'PUBLIC';
-    const STATUS_PRIVATE = 'PRIVATE';
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -51,7 +49,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      /**
      * @ORM\Column(name="status", type="string", nullable=false)
      */
-    private string $status = 'PUBLIC';
+    private string $status = self::STATUS_PUBLIC;
 
 
     /**
@@ -106,7 +104,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

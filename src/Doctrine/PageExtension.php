@@ -6,10 +6,11 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use Doctrine\ORM\QueryBuilder;
+use ProjetNormandie\PageBundle\Contracts\PageInterface;
 use Symfony\Component\Intl\Locale;
 use ProjetNormandie\PageBundle\Entity\Page;
 
-final class PageExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
+final class PageExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface, PageInterface
 {
     /**
      * @param QueryBuilder                $queryBuilder
@@ -65,6 +66,6 @@ final class PageExtension implements QueryCollectionExtensionInterface, QueryIte
         $queryBuilder->leftJoin('o.translations', 't', 'WITH', "t.locale='$locale'")
             ->addSelect('t')
             ->andWhere('o.status = :status')
-            ->setParameter('status', Page::STATUS_PUBLIC);
+            ->setParameter('status', self::STATUS_PUBLIC);
     }
 }
