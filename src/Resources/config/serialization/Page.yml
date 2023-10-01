@@ -8,6 +8,10 @@ ProjetNormandie\PageBundle\Entity\Page:
       groups:
         - 'page.read'
         - 'page.list'
+    enabled:
+      groups:
+        - 'page.read'
+        - 'page.list'
     name:
       groups:
         - 'page.read'
