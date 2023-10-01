@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use ProjetNormandie\PageBundle\Entity\Page;
@@ -45,6 +46,10 @@ class PageAdmin extends AbstractAdmin
                     'choices' => Page::getStatusChoices(),
                 ]
             )
+            ->add('enabled', CheckboxType::class, [
+                'label' => 'label.enabled',
+                'required' => false,
+            ])
             ->add('translations', TranslationsType::class, [
                 'required' => true,
                 'fields' => [
@@ -72,6 +77,7 @@ class PageAdmin extends AbstractAdmin
                 ]
             )
             ->add('slug', null, ['label' => 'label.slug'])
+            ->add('enabled', null, ['label' => 'label.enabled'])
             ->add('createdAt', null, ['label' => 'label.createdAt'])
             ->add('updatedAt', null, ['label' => 'label.updatedAt'])
             ->add('_action', 'actions', [
@@ -91,6 +97,7 @@ class PageAdmin extends AbstractAdmin
             ->add('id', null, ['label' => 'label.id'])
             ->add('name', null, ['label' => 'label.name'])
             ->add('status', null, ['label' => 'label.status'])
+            ->add('enabled', null, ['label' => 'label.enabled'])
             ->add('createdAt', null, ['label' => 'label.createdAt'])
             ->add('updatedAt', null, ['label' => 'label.updatedAt'])
             ->add('getText', null, ['label' => 'label.text', 'safe' => true]);

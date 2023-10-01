@@ -51,6 +51,11 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
      */
     private string $status = self::STATUS_PUBLIC;
 
+    /**
+     * @ORM\Column(name="enabled", type="boolean", nullable=false, options={"default":true})
+     */
+    private bool $enabled = true;
+
 
     /**
      * @return string
@@ -126,6 +131,27 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    /**
+     * Set enabled
+     * @param bool $enabled
+     * @return $this
+     */
+    public function setEnabled(bool $enabled): Page
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get $enabled
+     * @return bool
+     */
+    public function getEnabled(): bool
+    {
+        return $this->enabled;
     }
 
     /**
