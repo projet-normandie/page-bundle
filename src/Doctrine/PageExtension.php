@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace ProjetNormandie\PageBundle\Doctrine;
 
 use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
@@ -46,7 +49,7 @@ final class PageExtension implements QueryCollectionExtensionInterface, QueryIte
         array $identifiers,
         Operation $operation = null,
         array $context = []
-    ) : void {
+    ): void {
         $this->addWhere($queryBuilder, $resourceClass);
     }
 

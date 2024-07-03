@@ -1,0 +1,9 @@
+services:
+  sonata.admin.pn.page.page:
+    class: ProjetNormandie\PageBundle\Admin\PageAdmin
+    tags:
+      - name: sonata.admin
+        model_class: 'ProjetNormandie\PageBundle\Entity\Page'
+        manager_type: orm
+        group: "group.pages"
+        label: "label.page"

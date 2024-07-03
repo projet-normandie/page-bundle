@@ -1,30 +1,6 @@
 ProjetNormandie\PageBundle\Entity\Page:
   attributes:
-    id:
-      groups:
-        - 'page.read'
-        - 'page.list'
     slug:
       groups:
-        - 'page.read'
-        - 'page.list'
-    enabled:
-      groups:
-        - 'page.read'
-        - 'page.list'
-    name:
-      groups:
-        - 'page.read'
-        - 'page.list'
-    title:
-      groups:
-        - 'page.read'
-        - 'page.list'
-    text:
-      groups:
-        - 'page.read'
-        - 'page.list'
-    createdAt:
-      groups: []
-    updatedAt:
-      groups: []
+        - 'page:read'
+

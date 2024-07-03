@@ -11,17 +11,17 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
-        "a2lix/translation-form-bundle": "~3.0",
-        "api-platform/core": "^2.7",
+        "php": "^8.1",
+        "a2lix/translation-form-bundle": "^3.2",
+        "api-platform/core": "^3.2",
         "doctrine/orm": "^2.13",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "knplabs/doctrine-behaviors": "~2.0",
         "sonata-project/admin-bundle": "^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^4.0",
         "sonata-project/translation-bundle": "^3.0",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/intl": "^5.4"
+        "symfony/dependency-injection": "^6.4",
+        "symfony/intl": "^6.4"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.3",

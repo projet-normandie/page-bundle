@@ -1,8 +1,0 @@
-resources:
-    ProjetNormandie\PageBundle\Entity\Page:
-        collectionOperations:
-            get:
-                normalization_context: {'groups': [page.list]}
-        itemOperations:
-            get:
-                normalization_context: {'groups': [page.read]}
