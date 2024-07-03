@@ -7,5 +7,6 @@ label:
     page: 'Page'
     slug: 'Slug'
     status: 'Statut'
+    enabled: 'Activé'
     text: 'Texte'
     updatedAt: 'Modifié le'

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\PageBundle\Admin;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
