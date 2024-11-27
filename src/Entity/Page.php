@@ -17,8 +17,8 @@ use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
-use ProjetNormandie\PageBundle\Contracts\PageInterface;
 use ProjetNormandie\PageBundle\Repository\PageRepository;
+use ProjetNormandie\PageBundle\ValueObject\PageStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Table(name:'pnp_page')]
@@ -32,7 +32,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 #[ApiFilter(SearchFilter::class, properties: ['slug' => 'exact'])]
 
-class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface, PageInterface
+class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface
 {
     use TimestampableTrait;
     use TranslatablePropertiesTrait;
@@ -48,7 +48,7 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     private string $name = '';
 
     #[ORM\Column(length: 255, nullable: false)]
-    private string $status = self::STATUS_PUBLIC;
+    private string $status = PageStatus::PUBLIC;
 
     #[ORM\Column(length: 255, nullable: false, options: ['default' => true])]
     private bool $enabled = true;
@@ -85,12 +85,18 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
 
     public function setStatus(string $status): void
     {
-        $this->status = $status;
+        $value = new PageStatus($status);
+        $this->status = $value->getValue();
     }
 
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function getPageStatus(): PageStatus
+    {
+        return new PageStatus($this->status);
     }
 
     public function setEnabled(bool $enabled): void
@@ -128,13 +134,5 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     public function getSluggableFields(): array
     {
         return ['name'];
-    }
-
-    public static function getStatusChoices(): array
-    {
-        return [
-            self::STATUS_PUBLIC => self::STATUS_PUBLIC,
-            self::STATUS_PRIVATE => self::STATUS_PRIVATE,
-        ];
     }
 }

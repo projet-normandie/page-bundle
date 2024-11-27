@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProjetNormandie\PageBundle\Admin;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+use ProjetNormandie\PageBundle\ValueObject\PageStatus;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -45,7 +46,7 @@ class PageAdmin extends AbstractAdmin
                 ChoiceType::class,
                 [
                     'label' => 'label.status',
-                    'choices' => Page::getStatusChoices(),
+                    'choices' => PageStatus::getStatusChoices(),
                 ]
             )
             ->add('enabled', CheckboxType::class, [
@@ -75,7 +76,7 @@ class PageAdmin extends AbstractAdmin
                 'choice',
                 [
                     'label' => 'label.status',
-                    'choices' => Page::getStatusChoices(),
+                    'choices' => PageStatus::getStatusChoices(),
                 ]
             )
             ->add('slug', null, ['label' => 'label.slug'])

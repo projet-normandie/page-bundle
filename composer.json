@@ -11,9 +11,10 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "a2lix/translation-form-bundle": "^3.2",
-        "api-platform/core": "^3.2",
+        "api-platform/doctrine-orm": "^4.0",
+        "api-platform/symfony": "^4.0",
         "doctrine/orm": "^2.13",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "knplabs/doctrine-behaviors": "~2.0",
