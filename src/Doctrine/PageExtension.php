@@ -9,11 +9,11 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use Doctrine\ORM\QueryBuilder;
-use ProjetNormandie\PageBundle\Contracts\PageInterface;
+use ProjetNormandie\PageBundle\ValueObject\PageStatus;
 use Symfony\Component\Intl\Locale;
 use ProjetNormandie\PageBundle\Entity\Page;
 
-final class PageExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface, PageInterface
+final class PageExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
     /**
      * @param QueryBuilder                $queryBuilder
@@ -27,7 +27,7 @@ final class PageExtension implements QueryCollectionExtensionInterface, QueryIte
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
-        Operation $operation = null,
+        ?Operation $operation = null,
         array $context = []
     ): void {
         $this->addWhere($queryBuilder, $resourceClass);
@@ -47,7 +47,7 @@ final class PageExtension implements QueryCollectionExtensionInterface, QueryIte
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         array $identifiers,
-        Operation $operation = null,
+        ?Operation $operation = null,
         array $context = []
     ): void {
         $this->addWhere($queryBuilder, $resourceClass);
@@ -69,6 +69,6 @@ final class PageExtension implements QueryCollectionExtensionInterface, QueryIte
         $queryBuilder->leftJoin('o.translations', 't', 'WITH', "t.locale='$locale'")
             ->addSelect('t')
             ->andWhere('o.status = :status')
-            ->setParameter('status', self::STATUS_PUBLIC);
+            ->setParameter('status', PageStatus::PUBLIC);
     }
 }

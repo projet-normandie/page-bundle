@@ -9,14 +9,11 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
-use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
-use Knp\DoctrineBehaviors\Model\Translatable\TranslatableMethodsTrait;
-use Knp\DoctrineBehaviors\Model\Translatable\TranslatablePropertiesTrait;
-use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
-use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use ProjetNormandie\PageBundle\Repository\PageRepository;
 use ProjetNormandie\PageBundle\ValueObject\PageStatus;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -31,13 +28,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['page:read']]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['slug' => 'exact'])]
-
-class Page implements TimestampableInterface, TranslatableInterface, SluggableInterface
+class Page
 {
-    use TimestampableTrait;
-    use TranslatablePropertiesTrait;
-    use TranslatableMethodsTrait;
-    use SluggableTrait;
+    use TimestampableEntity;
 
     #[Groups(['page:read'])]
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
@@ -50,17 +43,33 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
     #[ORM\Column(length: 255, nullable: false)]
     private string $status = PageStatus::PUBLIC;
 
+    #[ORM\OneToMany(
+        mappedBy: 'translatable',
+        targetEntity: PageTranslation::class,
+        cascade: ['persist', 'remove'],
+        fetch: 'EAGER',
+        orphanRemoval: true,
+        indexBy: 'locale'
+    )]
+    private Collection $translations;
+
     #[ORM\Column(length: 255, nullable: false, options: ['default' => true])]
     private bool $enabled = true;
+
+    #[ORM\Column(length: 255, unique: false)]
+    #[Gedmo\Slug(fields: ['name'])]
+    private ?string $slug = null;
+
+    private ?string $currentLocale = null;
+
+    public function __construct()
+    {
+        $this->translations = new ArrayCollection();
+    }
 
     public function __toString()
     {
         return sprintf('%s [%s]', $this->getName(), $this->id);
-    }
-
-    public function getDefaultText(): string
-    {
-        return $this->translate('en', false)->getText();
     }
 
     public function setId(int $id): void
@@ -109,30 +118,85 @@ class Page implements TimestampableInterface, TranslatableInterface, SluggableIn
         return $this->enabled;
     }
 
-    public function setTitle(string $title): void
+    public function getSlug(): ?string
     {
-        $this->translate(null, false)->setText($title);
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    // Translation methods for A2lix compatibility
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function setTranslations(Collection $translations): self
+    {
+        $this->translations = $translations;
+        return $this;
+    }
+
+    public function addTranslation(PageTranslation $translation): self
+    {
+        if (!$this->translations->contains($translation)) {
+            $translation->setTranslatable($this);
+            $this->translations->set($translation->getLocale(), $translation);
+        }
+
+        return $this;
+    }
+
+    public function removeTranslation(PageTranslation $translation): self
+    {
+        if ($this->translations->removeElement($translation)) {
+            $translation->setTranslatable(null);
+        }
+
+        return $this;
+    }
+
+    public function translate(?string $locale = null, bool $fallbackToDefault = true): PageTranslation
+    {
+        $locale = $locale ?: $this->currentLocale ?: 'en';
+
+        if (!$this->translations->containsKey($locale)) {
+            $translation = new PageTranslation();
+            $translation->setTranslatable($this);
+            $translation->setLocale($locale);
+            $this->translations->set($locale, $translation);
+        }
+
+        return $this->translations->get($locale);
+    }
+
+    public function setCurrentLocale(string $locale): void
+    {
+        $this->currentLocale = $locale;
+    }
+
+    public function getCurrentLocale(): ?string
+    {
+        return $this->currentLocale;
+    }
+
+    public function setText(string $text, ?string $locale = null): void
+    {
+        $this->translate($locale)->setText($text);
     }
 
     #[Groups(['page:read'])]
-    public function getTitle(): string
+    public function getText(?string $locale = null): ?string
     {
-        return $this->translate(null, false)->getTitle();
+        return $this->translate($locale)->getText();
     }
 
-    public function setText(string $text): void
+    // Old methods for backward compatibility
+    public function mergeNewTranslations(): void
     {
-        $this->translate(null, false)->setText($text);
-    }
-
-    #[Groups(['page:read'])]
-    public function getText(): string
-    {
-        return $this->translate(null, false)->getText();
-    }
-
-    public function getSluggableFields(): array
-    {
-        return ['name'];
+        // Not needed anymore
     }
 }

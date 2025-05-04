@@ -26,30 +26,18 @@ checks:
         fix_line_ending: true
 
 tools:
-      php_code_sniffer:
-          enabled: true
-          config:
-              standard: PSR2
-      external_code_coverage: false
+    php_code_sniffer:
+        enabled: true
+        config:
+            standard: PSR12
+    external_code_coverage: false
 
 build:
-    image: default-bionic
     environment:
-        php: 
-          version: 7.4
-        mongodb: false
-        redis: false
-        mysql: false
-        postgresql: false
-        variables:
-            APP_ENV: test
-    dependencies:
-        override:
-          - composer install -n --ignore-platform-reqs
-    tests:
-        override: true
-    nodes: 
+        php:
+            version: '8.3.19'
+    nodes:
         analysis:
             tests:
                 override:
-                  - php-scrutinizer-run
+                    - php-scrutinizer-run

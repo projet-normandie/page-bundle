@@ -6,3 +6,8 @@ services:
   ProjetNormandie\PageBundle\:
     resource: '../src/*'
     exclude: '../src/{Admin,Entity,DependencyInjection,Migrations,Tests,Kernel.php}'
+
+  pn.page.event.entity.page_translation:
+    class: ProjetNormandie\PageBundle\EventListener\Entity\PageTranslationListener
+    tags:
+      - { name: doctrine.orm.entity_listener }

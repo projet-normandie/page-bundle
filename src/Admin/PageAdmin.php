@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ProjetNormandie\PageBundle\Admin;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
+use ProjetNormandie\PageBundle\Form\Type\RichTextEditorType;
 use ProjetNormandie\PageBundle\ValueObject\PageStatus;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
@@ -12,11 +13,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use ProjetNormandie\PageBundle\Entity\Page;
 
 /**
  * Administration manager for the Page Bundle.
@@ -54,11 +53,16 @@ class PageAdmin extends AbstractAdmin
                 'required' => false,
             ])
             ->add('translations', TranslationsType::class, [
+                'label' => false,
                 'required' => true,
                 'fields' => [
+                    'title' => [
+                        'field_type' => TextType::class,
+                        'label' => 'label.title',
+                    ],
                     'text' => [
-                        'field_type' => CKEditorType::class,
-                        'label' => 'Text',
+                        'field_type' => RichTextEditorType::class,
+                        'label' => 'label.text',
                     ]
                 ]
             ]);
